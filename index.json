@@ -2,14 +2,13 @@
   {
     "name": "Seadex",
     "id": "hayase.extension.seadex",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "type": "torrent",
     "accuracy": "high",
     "ratio": 0,
     "media": "sub",
-    "languages": [
-      "US"
-    ],
+    "languages": ["US"],
+    "url": "aHR0cHM6Ly9yZWxlYXNlcy5tb2U=",
     "icon": "https://releases.moe/favicon.png",
     "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/seadex.js"
@@ -17,14 +16,13 @@
   {
     "name": "AnimeTosho",
     "id": "hayase.extension.animetosho",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "type": "torrent",
     "accuracy": "high",
     "ratio": 0,
     "media": "sub",
-    "languages": [
-      "US"
-    ],
+    "languages": ["US"],
+    "url": "aHR0cHM6Ly9mZWVkLmFuaW1ldG9zaG8ub3Jn",
     "icon": "https://animetosho.org/inc/favicon.ico",
     "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/animetosho.js"
@@ -32,14 +30,13 @@
   {
     "name": "Nyaa",
     "id": "hayase.extension.nyaa",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "type": "torrent",
     "accuracy": "medium",
     "ratio": 0,
     "media": "sub",
-    "languages": [
-      "all"
-    ],
+    "languages": ["all"],
+    "url": "aHR0cHM6Ly9ueWFhLnNp",
     "icon": "https://nyaa.si/static/favicon.png",
     "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/nyaa.js"
@@ -47,29 +44,27 @@
   {
     "id": "hayase.extension.piratebay",
     "name": "PirateBay",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "torrent",
     "accuracy": "low",
     "media": "both",
-    "languages": [
-      "US"
-    ],
+    "languages": ["US"],
+    "url": "aHR0cHM6Ly9hcGliYXkub3Jn",
     "description": "Fetches torrents from The Pirate Bay via apibay.org",
-    "icon": "https://upload.wikimedia.org/wikipedia/en/3/36/The_Pirate_Bay_logo.svg",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/The_Pirate_Bay_logo.svg/1058px-The_Pirate_Bay_logo.svg.png?20070826080948",
     "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/piratebay.js"
   },
   {
     "name": "SubsPlease",
     "id": "hayase.extension.subsplease",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "type": "torrent",
     "accuracy": "high",
     "ratio": 0,
     "media": "sub",
-    "languages": [
-      "US"
-    ],
+    "languages": ["US"],
+    "url": "aHR0cHM6Ly9zdWJzcGxlYXNlLm9yZw==",
     "icon": "https://subsplease.org/favicon.ico",
     "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/subsplease.js"
@@ -77,14 +72,13 @@
   {
     "name": "AnimeToshoNZB",
     "id": "hayase.extension.animetosho-nzb",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "nzb",
     "accuracy": "high",
     "ratio": 0,
     "media": "both",
-    "languages": [
-      "all"
-    ],
+    "languages": ["all"],
+    "url": "aHR0cHM6Ly9mZWVkLmFuaW1ldG9zaG8ub3Jn",
     "icon": "https://animetosho.org/inc/favicon.ico",
     "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/animetosho-nzb.js"
@@ -92,14 +86,13 @@
   {
     "name": "NyaaGerman",
     "id": "hayase.extension.nyaa-german",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "torrent",
     "accuracy": "medium",
     "ratio": 0,
     "media": "dub",
-    "languages": [
-      "DE"
-    ],
+    "languages": ["DE"],
+    "url": "aHR0cHM6Ly9ueWFhLnNp",
     "icon": "https://nyaa.si/static/favicon.png",
     "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/nyaa-german.js"
@@ -107,14 +100,13 @@
   {
     "name": "AnimeToshoGerman",
     "id": "hayase.extension.animetosho-german",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "torrent",
     "accuracy": "high",
     "ratio": 0,
     "media": "dub",
-    "languages": [
-      "DE"
-    ],
+    "languages": ["DE"],
+    "url": "aHR0cHM6Ly9mZWVkLmFuaW1ldG9zaG8ub3Jn",
     "icon": "https://animetosho.org/inc/favicon.ico",
     "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/animetosho-german.js"
@@ -122,14 +114,13 @@
   {
     "name": "TokyoTosho",
     "id": "hayase.extension.tokyotosho",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "type": "torrent",
     "accuracy": "medium",
     "ratio": 0,
     "media": "sub",
-    "languages": [
-      "US"
-    ],
+    "languages": ["US"],
+    "url": "aHR0cHM6Ly93d3cudG9reW90b3Noby5pbmZv",
     "icon": "https://www.tokyotosho.info/favicon.ico",
     "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/tokyotosho.js"
