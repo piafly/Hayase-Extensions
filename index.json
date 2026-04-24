@@ -75,6 +75,36 @@
     "code": "https://raw.githubusercontent.com/LetMeGetAByte/Hayase-Extensions/main/subsplease.js"
   },
   {
+    "name": "NyaaGerman",
+    "id": "hayase.extension.nyaa-german",
+    "version": "1.0.0",
+    "type": "torrent",
+    "accuracy": "medium",
+    "ratio": 0,
+    "media": "dub",
+    "languages": [
+      "DE"
+    ],
+    "icon": "https://nyaa.si/static/favicon.png",
+    "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
+    "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/nyaa-german.js"
+  },
+  {
+    "name": "AnimeToshoGerman",
+    "id": "hayase.extension.animetosho-german",
+    "version": "1.0.0",
+    "type": "torrent",
+    "accuracy": "high",
+    "ratio": 0,
+    "media": "dub",
+    "languages": [
+      "DE"
+    ],
+    "icon": "https://animetosho.org/inc/favicon.ico",
+    "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
+    "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/animetosho-german.js"
+  },
+  {
     "name": "TokyoTosho",
     "id": "hayase.extension.tokyotosho",
     "version": "1.0.0",
