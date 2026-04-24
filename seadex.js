@@ -2,7 +2,7 @@ export default new class SeaDex {
   url = atob('aHR0cHM6Ly9yZWxlYXNlcy5tb2UvYXBpL2NvbGxlY3Rpb25zL2VudHJpZXMvcmVjb3Jkcw==')
 
   /** @type {import('./').SearchFunction} */
-  async single ({ anilistId, titles, episodeCount }) {
+  async single ({ anilistId, titles, episodeCount, fetch = globalThis.fetch }) {
     if (!anilistId) throw new Error('No anilistId provided')
     if (!titles?.length) throw new Error('No titles provided')
     const res = await fetch(`${this.url}?page=1&perPage=1&filter=alID%3D%22${anilistId}%22&skipTotal=1&expand=trs`)
@@ -39,6 +39,7 @@ export default new class SeaDex {
 
   async test () {
     const res = await fetch(this.url)
-    return res.ok
+    if (!res.ok) throw new Error(`SeaDex returned ${res.status} — service may be down`)
+    return true
   }
 }()

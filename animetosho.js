@@ -34,7 +34,7 @@ export default new class Tosho {
   }
 
   /** @type {import('./').SearchFunction} */
-  async single ({ anidbEid, resolution, exclusions }) {
+  async single ({ anidbEid, resolution, exclusions, fetch = globalThis.fetch }) {
     if (!anidbEid) return []
     const query = this.buildQuery({ resolution, exclusions })
     const res = await fetch(this.url + '?eid=' + anidbEid + query)
@@ -47,7 +47,7 @@ export default new class Tosho {
   }
 
   /** @type {import('./').SearchFunction} */
-  async batch ({ anidbAid, resolution, episodeCount, exclusions }) {
+  async batch ({ anidbAid, resolution, episodeCount, exclusions, fetch = globalThis.fetch }) {
     if (!anidbAid) return []
     if (episodeCount == null) return []
     const query = this.buildQuery({ resolution, exclusions })
@@ -60,7 +60,7 @@ export default new class Tosho {
   }
 
   /** @type {import('./').SearchFunction} */
-  async movie ({ anidbAid, resolution, exclusions }) {
+  async movie ({ anidbAid, resolution, exclusions, fetch = globalThis.fetch }) {
     if (!anidbAid) return []
     const query = this.buildQuery({ resolution, exclusions })
     const res = await fetch(this.url + '?aid=' + anidbAid + query)
@@ -74,6 +74,7 @@ export default new class Tosho {
 
   async test () {
     const res = await fetch(this.url)
-    return res.ok
+    if (!res.ok) throw new Error(`AnimeTosho returned ${res.status} — service may be down`)
+    return true
   }
 }()

@@ -2,7 +2,7 @@ export default new class Nyaa {
   base = 'https://torrent-search-api-livid.vercel.app/api/nyaasi/'
 
   /** @type {import('./').SearchFunction} */
-  async single({ titles, episode }) {
+  async single({ titles, episode, fetch = globalThis.fetch }) {
     if (!titles?.length) return []
 
     const query = this.buildQuery(titles[0], episode)
@@ -41,8 +41,6 @@ export default new class Nyaa {
         downloads: parseInt(item.Downloads || '0'),
         size: this.parseSize(item.Size),
         date: new Date(item.DateUploaded),
-        verified: false,
-        type: 'alt',
         accuracy: 'medium'
       }
     })
@@ -67,11 +65,8 @@ export default new class Nyaa {
   }
 
   async test() {
-    try {
-      const res = await fetch(this.base + 'one piece')
-      return res.ok
-    } catch {
-      return false
-    }
+    const res = await fetch(this.base + 'one piece')
+    if (!res.ok) throw new Error(`Nyaa proxy returned ${res.status} — service may be down`)
+    return true
   }
 }()

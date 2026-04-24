@@ -2,7 +2,7 @@ export default new class SubsPlease {
   base = 'https://subsplease.org/api/'
 
   /** @type {import('./').SearchFunction} */
-  async single({ titles, episode }) {
+  async single({ titles, episode, fetch = globalThis.fetch }) {
     if (!titles?.length) return []
 
     const query = titles[0] + (episode ? ` ${episode}` : '')
@@ -39,8 +39,6 @@ export default new class SubsPlease {
           downloads: 0,
           size: 0, // API doesn't provide size
           date: new Date(item.release_date),
-          verified: true,
-          type: 'alt',
           accuracy: 'high'
         })
       }
@@ -49,11 +47,8 @@ export default new class SubsPlease {
   }
 
   async test() {
-    try {
-      const res = await fetch(this.base + '?f=search&tz=America/New_York&s=One%20Piece')
-      return res.ok
-    } catch {
-      return false
-    }
+    const res = await fetch(this.base + '?f=search&tz=America/New_York&s=One%20Piece')
+    if (!res.ok) throw new Error(`SubsPlease returned ${res.status} — service may be down`)
+    return true
   }
 }()

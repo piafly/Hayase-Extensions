@@ -138,10 +138,13 @@ describe('AnimeTosho', () => {
 // intermittently unavailable. Tests validate shape when results are returned.
 
 describe('Nyaa', () => {
-  test('test() returns a boolean', async () => {
-    const ok = await Nyaa.test()
-    assert.ok(typeof ok === 'boolean')
-    if (!ok) console.log('  ⚠ Nyaa proxy unavailable — remaining tests may yield 0 results')
+  test('test() returns true or throws on unavailability', async () => {
+    try {
+      const ok = await Nyaa.test()
+      assert.strictEqual(ok, true)
+    } catch (err) {
+      console.log(`  ⚠ Nyaa proxy unavailable: ${err.message} — remaining tests may yield 0 results`)
+    }
   })
 
   test('single() returns empty array when titles is empty', async () => {
@@ -168,10 +171,13 @@ describe('Nyaa', () => {
 // Same third-party proxy as Nyaa — may be unavailable.
 
 describe('PirateBay', () => {
-  test('test() returns a boolean', async () => {
-    const ok = await PirateBay.test()
-    assert.ok(typeof ok === 'boolean')
-    if (!ok) console.log('  ⚠ PirateBay proxy unavailable — remaining tests may yield 0 results')
+  test('test() returns true or throws on unavailability', async () => {
+    try {
+      const ok = await PirateBay.test()
+      assert.strictEqual(ok, true)
+    } catch (err) {
+      console.log(`  ⚠ PirateBay proxy unavailable: ${err.message} — remaining tests may yield 0 results`)
+    }
   })
 
   test('single() returns empty array when titles is empty', async () => {

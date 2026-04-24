@@ -2,7 +2,7 @@ export default new class TokyoTosho {
   base = 'https://www.tokyotosho.info/rss.php'
 
   /** @type {import('./').SearchFunction} */
-  async single({ titles, episode }) {
+  async single({ titles, episode, fetch = globalThis.fetch }) {
     if (!titles?.length) return []
 
     const query = titles[0] + (episode ? ` ${episode}` : '')
@@ -20,47 +20,44 @@ export default new class TokyoTosho {
 
   parseRSS(text) {
     const results = []
-    const itemRegex = /<item>([\s\S]*?)<\/item>/g
-    const titleRegex = /<title><!\[CDATA\[(.*?)\]\]><\/title>/
-    const linkRegex = /<link>(.*?)<\/link>/
-    const descRegex = /<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/
-    
-    let match
-    while ((match = itemRegex.exec(text)) !== null) {
-      const itemContent = match[1]
-      const titleMatch = itemContent.match(titleRegex)
-      const linkMatch = itemContent.match(linkRegex)
-      const descMatch = itemContent.match(descRegex)
+    const itemRe = /<item>([\s\S]*?)<\/item>/g
+    const titleRe = /<title><!\[CDATA\[(.*?)\]\]><\/title>/
+    const descRe = /<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/
+    const pubDateRe = /<pubDate>(.*?)<\/pubDate>/
 
-      if (titleMatch && descMatch) {
-        const title = titleMatch[1]
-        const description = descMatch[1]
-        
-        // Extract magnet link from description
-        const magnetMatch = description.match(/magnet:\?xt=urn:btih:([a-zA-Z0-9]+)/)
-        if (!magnetMatch) continue
+    let m
+    while ((m = itemRe.exec(text)) !== null) {
+      const item = m[1]
+      const titleMatch = item.match(titleRe)
+      const descMatch = item.match(descRe)
 
-        const magnet = magnetMatch[0]
-        const hash = magnetMatch[1]
+      if (!titleMatch || !descMatch) continue
 
-        // Extract size if available (often in description like "Size: 123MB")
-        const sizeMatch = description.match(/Size:\s*([\d.]+)\s*(KiB|MiB|GiB|KB|MB|GB)/i)
-        const size = sizeMatch ? this.parseSize(sizeMatch[0]) : 0
+      const title = titleMatch[1]
+      const description = descMatch[1]
 
-        results.push({
-          title,
-          link: magnet,
-          hash,
-          seeders: 0, // RSS doesn't provide seeders
-          leechers: 0,
-          downloads: 0,
-          size,
-          date: new Date(), // RSS items usually don't have easy to parse date in description, could parse <pubDate> if needed
-          verified: false,
-          type: 'alt',
-          accuracy: 'medium'
-        })
-      }
+      const magnetMatch = description.match(/magnet:\?xt=urn:btih:([a-zA-Z0-9]+)/)
+      if (!magnetMatch) continue
+
+      const magnet = magnetMatch[0]
+      const hash = magnetMatch[1]
+
+      const sizeMatch = description.match(/Size:\s*([\d.]+)\s*(KiB|MiB|GiB|KB|MB|GB)/i)
+      const size = sizeMatch ? this.parseSize(sizeMatch[0]) : 0
+
+      const pubDate = item.match(pubDateRe)?.[1]
+
+      results.push({
+        title,
+        link: magnet,
+        hash,
+        seeders: 0,
+        leechers: 0,
+        downloads: 0,
+        size,
+        date: pubDate ? new Date(pubDate) : new Date(),
+        accuracy: 'medium'
+      })
     }
     return results
   }
@@ -84,11 +81,8 @@ export default new class TokyoTosho {
   }
 
   async test() {
-    try {
-      const res = await fetch(this.base)
-      return res.ok
-    } catch {
-      return false
-    }
+    const res = await fetch(this.base)
+    if (!res.ok) throw new Error(`TokyoTosho returned ${res.status} — service may be down`)
+    return true
   }
 }()

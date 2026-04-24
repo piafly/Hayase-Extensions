@@ -5,24 +5,24 @@ export default new class NyaaGerman {
   base = 'https://nyaa.si/?page=rss&c=1_0&f=0&q='
 
   /** @type {import('./').SearchFunction} */
-  async single ({ titles, episode }) {
+  async single ({ titles, episode, fetch = globalThis.fetch }) {
     if (!titles?.length) return []
-    return this.search(titles[0], episode)
+    return this.search(titles[0], episode, fetch)
   }
 
   /** @type {import('./').SearchFunction} */
-  async batch ({ titles }) {
+  async batch ({ titles, fetch = globalThis.fetch }) {
     if (!titles?.length) return []
-    return this.search(titles[0], null)
+    return this.search(titles[0], null, fetch)
   }
 
   /** @type {import('./').SearchFunction} */
-  async movie ({ titles }) {
+  async movie ({ titles, fetch = globalThis.fetch }) {
     if (!titles?.length) return []
-    return this.search(titles[0], null)
+    return this.search(titles[0], null, fetch)
   }
 
-  async search (title, episode) {
+  async search (title, episode, fetch) {
     const clean = title.replace(/[^\w\s-]/g, ' ').trim()
     const ep = episode ? episode.toString().padStart(2, '0') : ''
 
@@ -30,7 +30,7 @@ export default new class NyaaGerman {
       [clean, ep, lang].filter(Boolean).join(' ')
     )
 
-    const results = await Promise.all(queries.map(q => this.fetchRSS(q)))
+    const results = await Promise.all(queries.map(q => this.fetchRSS(q, fetch)))
 
     const seen = new Set()
     return results.flat().filter(r => {
@@ -40,7 +40,7 @@ export default new class NyaaGerman {
     })
   }
 
-  async fetchRSS (query) {
+  async fetchRSS (query, fetch) {
     try {
       const res = await fetch(this.base + encodeURIComponent(query))
       if (!res.ok) return []
@@ -74,8 +74,7 @@ export default new class NyaaGerman {
         downloads: parseInt(s.match(/<nyaa:downloads>(\d+)<\/nyaa:downloads>/)?.[1] ?? '0'),
         size:      this.parseSize(s.match(/<nyaa:size>(.*?)<\/nyaa:size>/)?.[1]    ?? ''),
         date:      pubDate ? new Date(pubDate) : new Date(),
-        accuracy:  'medium',
-        type:      'alt'
+        accuracy:  'medium'
       })
     }
     return items
@@ -94,11 +93,8 @@ export default new class NyaaGerman {
   }
 
   async test () {
-    try {
-      const res = await fetch(this.base + 'German')
-      return res.ok
-    } catch {
-      return false
-    }
+    const res = await fetch(this.base + 'German')
+    if (!res.ok) throw new Error(`Nyaa returned ${res.status} — service may be down`)
+    return true
   }
 }()
