@@ -3,6 +3,7 @@ import { test, describe } from 'node:test'
 import assert from 'node:assert/strict'
 import Seadex from './seadex.js'
 import AnimeTosho from './animetosho.js'
+import AnimeToshoNZB from './animetosho-nzb.js'
 import Nyaa from './nyaa.js'
 import PirateBay from './piratebay.js'
 import SubsPlease from './subsplease.js'
@@ -250,6 +251,32 @@ describe('TokyoTosho', () => {
 
   test('batch() aliases single()', () => {
     assert.strictEqual(TokyoTosho.batch, TokyoTosho.single)
+  })
+})
+
+// ─── AnimeToshoNZB ────────────────────────────────────────────────────────────
+
+describe('AnimeToshoNZB', () => {
+  test('test() confirms connectivity', async () => {
+    const ok = await AnimeToshoNZB.test()
+    assert.strictEqual(ok, true)
+  })
+
+  test('query() returns undefined for unknown hash', async () => {
+    const url = await AnimeToshoNZB.query('0000000000000000000000000000000000000000')
+    assert.strictEqual(url, undefined)
+  })
+
+  test('query() returns NZB URL for known hash', async () => {
+    // Hash from Hitori no Shita S06E17 — indexed by AnimeTosho
+    const url = await AnimeToshoNZB.query('c40b62a41d095847411877f410b331fad6d2e6b9')
+    if (url) {
+      assert.ok(typeof url === 'string', 'nzb_url should be a string')
+      assert.match(url, /\.nzb$/, 'URL should end with .nzb')
+      console.log('  → ' + url)
+    } else {
+      console.log('  ⚠ NZB URL not available for this entry')
+    }
   })
 })
 

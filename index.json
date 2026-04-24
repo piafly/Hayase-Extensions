@@ -75,6 +75,21 @@
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/subsplease.js"
   },
   {
+    "name": "AnimeToshoNZB",
+    "id": "hayase.extension.animetosho-nzb",
+    "version": "1.0.0",
+    "type": "nzb",
+    "accuracy": "high",
+    "ratio": 0,
+    "media": "both",
+    "languages": [
+      "all"
+    ],
+    "icon": "https://animetosho.org/inc/favicon.ico",
+    "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
+    "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/animetosho-nzb.js"
+  },
+  {
     "name": "NyaaGerman",
     "id": "hayase.extension.nyaa-german",
     "version": "1.0.0",
