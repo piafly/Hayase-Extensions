@@ -9,7 +9,9 @@ export default new class Nyaa {
     const url = `${this.base}${encodeURIComponent(query)}`
 
     const res = await fetch(url)
-    const data = await res.json()
+    if (!res.ok) return []
+    let data
+    try { data = await res.json() } catch { return [] }
 
     if (!Array.isArray(data)) return []
 
