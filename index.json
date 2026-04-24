@@ -84,6 +84,34 @@
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/animetosho-nzb.js"
   },
   {
+    "name": "AniRena",
+    "id": "hayase.extension.anirena",
+    "version": "1.0.0",
+    "type": "torrent",
+    "accuracy": "medium",
+    "ratio": 0,
+    "media": "sub",
+    "languages": ["all"],
+    "url": "aHR0cHM6Ly93d3cuYW5pcmVuYS5jb20=",
+    "icon": "https://www.anirena.com/content/images/favicon-32x32.png",
+    "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
+    "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/anirena.js"
+  },
+  {
+    "name": "AniRenaGerman",
+    "id": "hayase.extension.anirena-german",
+    "version": "1.0.0",
+    "type": "torrent",
+    "accuracy": "medium",
+    "ratio": 0,
+    "media": "dub",
+    "languages": ["DE"],
+    "url": "aHR0cHM6Ly93d3cuYW5pcmVuYS5jb20=",
+    "icon": "https://www.anirena.com/content/images/favicon-32x32.png",
+    "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
+    "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/anirena-german.js"
+  },
+  {
     "name": "NyaaGerman",
     "id": "hayase.extension.nyaa-german",
     "version": "1.0.1",

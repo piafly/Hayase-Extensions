@@ -10,6 +10,8 @@ import SubsPlease from './subsplease.js'
 import TokyoTosho from './tokyotosho.js'
 import NyaaGerman from './nyaa-german.js'
 import AnimeToshoGerman from './animetosho-german.js'
+import AniRena from './anirena.js'
+import AniRenaGerman from './anirena-german.js'
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -353,6 +355,68 @@ describe('AnimeToshoGerman', () => {
     const results = await AnimeToshoGerman.batch({
       anidbAid: 13,
       episodeCount: 1,
+      resolution: '',
+      exclusions: []
+    })
+    assert.ok(Array.isArray(results))
+    for (const r of results) {
+      assertTorrentResult(r)
+      assert.match(r.title, /german|deutsch|gersub|gerdub|\[ger\]|\(ger\)|\[de\]|\(de\)/i,
+        `Expected German indicator in title: "${r.title}"`)
+    }
+    console.log(`  → ${results.length} German result(s)`)
+  })
+})
+
+// ─── AniRena ──────────────────────────────────────────────────────────────────
+
+describe('AniRena', () => {
+  test('test() confirms connectivity', async () => {
+    const ok = await AniRena.test()
+    assert.strictEqual(ok, true)
+  })
+
+  test('single() returns empty array when titles is empty', async () => {
+    const results = await AniRena.single({ titles: [], episode: 1, resolution: '', exclusions: [] })
+    assert.deepStrictEqual(results, [])
+  })
+
+  test('single() returns valid TorrentResult[] for One Piece ep 1', async () => {
+    const results = await AniRena.single({
+      titles: ['One Piece'],
+      episode: 1,
+      resolution: '',
+      exclusions: []
+    })
+    assertResultsIfAny(results)
+    // AniRena uses .torrent URLs, not magnet links
+    for (const r of results) {
+      assert.match(r.link, /\.torrent$/, 'link should be a .torrent URL')
+    }
+  })
+
+  test('batch() aliases single()', () => {
+    assert.strictEqual(AniRena.batch, AniRena.single)
+  })
+})
+
+// ─── AniRenaGerman ────────────────────────────────────────────────────────────
+
+describe('AniRenaGerman', () => {
+  test('test() confirms connectivity', async () => {
+    const ok = await AniRenaGerman.test()
+    assert.strictEqual(ok, true)
+  })
+
+  test('single() returns empty array when titles is empty', async () => {
+    const results = await AniRenaGerman.single({ titles: [], episode: 1, resolution: '', exclusions: [] })
+    assert.deepStrictEqual(results, [])
+  })
+
+  test('single() returns only German results for Dragon Ball Z', async () => {
+    const results = await AniRenaGerman.single({
+      titles: ['Dragon Ball Z'],
+      episode: 1,
       resolution: '',
       exclusions: []
     })
