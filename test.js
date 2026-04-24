@@ -93,32 +93,24 @@ describe('AnimeTosho', () => {
     assert.strictEqual(ok, true)
   })
 
-  test('single() throws when anidbEid is missing', async () => {
-    await assert.rejects(
-      () => AnimeTosho.single({ resolution: '', exclusions: [] }),
-      /No anidbEid/
-    )
+  test('single() returns [] when anidbEid is missing', async () => {
+    const r = await AnimeTosho.single({ resolution: '', exclusions: [] })
+    assert.deepStrictEqual(r, [])
   })
 
-  test('batch() throws when anidbAid is missing', async () => {
-    await assert.rejects(
-      () => AnimeTosho.batch({ resolution: '', exclusions: [], episodeCount: 1 }),
-      /No anidbAid/
-    )
+  test('batch() returns [] when anidbAid is missing', async () => {
+    const r = await AnimeTosho.batch({ resolution: '', exclusions: [], episodeCount: 1 })
+    assert.deepStrictEqual(r, [])
   })
 
-  test('batch() throws when episodeCount is missing', async () => {
-    await assert.rejects(
-      () => AnimeTosho.batch({ anidbAid: 13, resolution: '', exclusions: [] }),
-      /No episodeCount/
-    )
+  test('batch() returns [] when episodeCount is missing', async () => {
+    const r = await AnimeTosho.batch({ anidbAid: 13, resolution: '', exclusions: [] })
+    assert.deepStrictEqual(r, [])
   })
 
-  test('movie() throws when anidbAid is missing', async () => {
-    await assert.rejects(
-      () => AnimeTosho.movie({ resolution: '', exclusions: [] }),
-      /No anidbAid/
-    )
+  test('movie() returns [] when anidbAid is missing', async () => {
+    const r = await AnimeTosho.movie({ resolution: '', exclusions: [] })
+    assert.deepStrictEqual(r, [])
   })
 
   test('batch() returns valid TorrentResult[] for Dragon Ball Z (AniDB aid=13)', async () => {
@@ -317,25 +309,19 @@ describe('AnimeToshoGerman', () => {
     assert.strictEqual(ok, true)
   })
 
-  test('single() throws when anidbEid is missing', async () => {
-    await assert.rejects(
-      () => AnimeToshoGerman.single({ resolution: '', exclusions: [] }),
-      /No anidbEid/
-    )
+  test('single() returns [] when anidbEid is missing', async () => {
+    const r = await AnimeToshoGerman.single({ resolution: '', exclusions: [] })
+    assert.deepStrictEqual(r, [])
   })
 
-  test('batch() throws when anidbAid is missing', async () => {
-    await assert.rejects(
-      () => AnimeToshoGerman.batch({ resolution: '', exclusions: [], episodeCount: 1 }),
-      /No anidbAid/
-    )
+  test('batch() returns [] when anidbAid is missing', async () => {
+    const r = await AnimeToshoGerman.batch({ resolution: '', exclusions: [], episodeCount: 1 })
+    assert.deepStrictEqual(r, [])
   })
 
-  test('movie() throws when anidbAid is missing', async () => {
-    await assert.rejects(
-      () => AnimeToshoGerman.movie({ resolution: '', exclusions: [] }),
-      /No anidbAid/
-    )
+  test('movie() returns [] when anidbAid is missing', async () => {
+    const r = await AnimeToshoGerman.movie({ resolution: '', exclusions: [] })
+    assert.deepStrictEqual(r, [])
   })
 
   test('batch() with Dragon Ball Z (AniDB aid=13) returns only German results', async () => {
