@@ -527,7 +527,7 @@ describe('Torrentio', () => {
     for (const r of results) {
       assert.match(r.link, /^magnet:/, 'link should be a magnet URI')
       assert.ok(r.hash.length > 0, 'hash should be non-empty')
-      assert.strictEqual(r.accuracy, 'low')
+      assert.strictEqual(r.accuracy, 'high')
     }
   })
 
@@ -595,7 +595,7 @@ describe('EZTV', () => {
     for (const r of results) {
       assert.match(r.link, /^magnet:/, 'link should be a magnet URI')
       assert.ok(r.hash.length > 0, 'hash should be non-empty')
-      assert.strictEqual(r.accuracy, 'low')
+      assert.strictEqual(r.accuracy, 'high')
     }
   })
 
@@ -652,7 +652,7 @@ describe('YTS', () => {
     for (const r of results) {
       assert.ok(r.hash.length > 0, 'hash should be non-empty')
       assert.match(r.title, /YTS/, 'title should contain YTS branding')
-      assert.strictEqual(r.accuracy, 'low')
+      assert.strictEqual(r.accuracy, 'high')
     }
   })
 

@@ -4,9 +4,9 @@ export default new class EZTV {
 
   /** @type {import('./').SearchFunction} */
   async single({ imdbAid, titles, episode, fetch = globalThis.fetch }) {
-    const imdbId = imdbAid ?? await this.resolveImdb(titles, fetch)
-    if (!imdbId) return []
-    return this.fetchTorrents(imdbId, episode ?? null, fetch)
+    const resolved = imdbAid ?? await this.resolveImdb(titles, fetch)
+    if (!resolved) return []
+    return this.fetchTorrents(resolved, episode ?? null, imdbAid ? 'high' : 'low', fetch)
   }
 
   /** @type {import('./').SearchFunction} */
@@ -29,7 +29,7 @@ export default new class EZTV {
     return null
   }
 
-  async fetchTorrents(imdbId, episode, fetch) {
+  async fetchTorrents(imdbId, episode, accuracy, fetch) {
     try {
       // strip leading "tt" — EZTV expects the numeric part only
       const id = imdbId.replace(/^tt/, '')
@@ -48,7 +48,7 @@ export default new class EZTV {
           downloads: 0,
           size:      parseInt(t.size_bytes ?? '0') || 0,
           date:      new Date((t.date_released_unix ?? 0) * 1000),
-          accuracy:  'medium'
+          accuracy
         }))
         .filter(t => t.hash)
     } catch {

@@ -4,10 +4,10 @@ export default new class Torrentio {
 
   /** @type {import('./').SearchFunction} */
   async single({ imdbAid, titles, episode, fetch = globalThis.fetch }) {
-    const imdbId = imdbAid ?? await this.resolveImdb(titles, 'series', fetch)
-    if (!imdbId) return []
+    const resolved = imdbAid ?? await this.resolveImdb(titles, 'series', fetch)
+    if (!resolved) return []
     const ep = episode ?? 1
-    return this.fetchStreams(`series/${imdbId}:1:${ep}`, fetch)
+    return this.fetchStreams(`series/${resolved}:1:${ep}`, imdbAid ? 'high' : 'low', fetch)
   }
 
   /** @type {import('./').SearchFunction} */
@@ -15,9 +15,9 @@ export default new class Torrentio {
 
   /** @type {import('./').SearchFunction} */
   async movie({ imdbAid, titles, fetch = globalThis.fetch }) {
-    const imdbId = imdbAid ?? await this.resolveImdb(titles, 'movie', fetch)
-    if (!imdbId) return []
-    return this.fetchStreams(`movie/${imdbId}`, fetch)
+    const resolved = imdbAid ?? await this.resolveImdb(titles, 'movie', fetch)
+    if (!resolved) return []
+    return this.fetchStreams(`movie/${resolved}`, imdbAid ? 'high' : 'low', fetch)
   }
 
   async resolveImdb(titles, type, fetch) {
@@ -34,7 +34,7 @@ export default new class Torrentio {
     return null
   }
 
-  async fetchStreams(path, fetch) {
+  async fetchStreams(path, accuracy, fetch) {
     try {
       const res = await fetch(`${this.torrentio}/${path}.json`)
       if (!res.ok) return []
@@ -56,7 +56,7 @@ export default new class Torrentio {
           downloads: 0,
           size,
           date: new Date(),
-          accuracy: 'medium'
+          accuracy
         }]
       })
     } catch {

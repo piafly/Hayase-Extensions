@@ -10,6 +10,7 @@ export default new class YTS {
   /** @type {import('./').SearchFunction} */
   async movie({ imdbAid, titles, fetch = globalThis.fetch }) {
     if (!titles?.length && !imdbAid) return []
+    const accuracy = imdbAid ? 'high' : 'low'
     try {
       const query = imdbAid ?? titles[0]
       const res = await fetch(`${this.base}?query_term=${encodeURIComponent(query)}&limit=50`)
@@ -28,7 +29,7 @@ export default new class YTS {
           downloads: 0,
           size:      parseInt(t.size_bytes ?? '0') || 0,
           date:      new Date((t.date_uploaded_unix ?? 0) * 1000),
-          accuracy:  'low'
+          accuracy
         }))
       ).filter(t => t.hash)
     } catch {
