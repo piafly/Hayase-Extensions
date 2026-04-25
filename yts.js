@@ -1,5 +1,5 @@
 export default new class YTS {
-  base = atob('aHR0cHM6Ly95dHMubXgvYXBpL3YyL2xpc3RfbW92aWVzLmpzb24=')
+  base = atob('aHR0cHM6Ly95dHMuYW0vYXBpL3YyL2xpc3RfbW92aWVzLmpzb24=')
 
   /** @type {import('./').SearchFunction} */
   single = this.movie

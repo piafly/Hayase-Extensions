@@ -192,9 +192,9 @@
     "ratio": 0,
     "media": "both",
     "languages": ["all"],
-    "url": "aHR0cHM6Ly95dHMubXg=",
+    "url": "aHR0cHM6Ly95dHMuYW0=",
     "description": "High quality movie torrents (BluRay 1080p/4K) via YTS.",
-    "icon": "https://yts.mx/favicon.ico",
+    "icon": "https://yts.bz/favicon.ico",
     "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/yts.js"
   },
