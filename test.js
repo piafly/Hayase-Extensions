@@ -13,6 +13,7 @@ import AnimeToshoGerman from './animetosho-german.js'
 import AniRena from './anirena.js'
 import AniRenaGerman from './anirena-german.js'
 import NekoBT from './nekobt.js'
+import Torrentio from './torrentio.js'
 
 // ─── Source URL overview ──────────────────────────────────────────────────────
 // URLs are base64-encoded in extension files. Decoded for reference:
@@ -490,5 +491,78 @@ describe('NekoBT', () => {
 
   test('movie() aliases batch()', () => {
     assert.strictEqual(NekoBT.movie, NekoBT.batch)
+  })
+})
+
+// ─── Torrentio ────────────────────────────────────────────────────────────────
+
+describe('Torrentio', () => {
+  test('test() confirms connectivity', async () => {
+    const ok = await Torrentio.test()
+    assert.strictEqual(ok, true)
+  })
+
+  test('single() returns [] when imdbAid and titles are both missing', async () => {
+    const results = await Torrentio.single({ resolution: '', exclusions: [] })
+    assert.deepStrictEqual(results, [])
+  })
+
+  test('single() returns [] when titles is empty and no imdbAid', async () => {
+    const results = await Torrentio.single({ titles: [], episode: 1, resolution: '', exclusions: [] })
+    assert.deepStrictEqual(results, [])
+  })
+
+  test('single() returns valid TorrentResult[] using direct imdbAid', async () => {
+    // tt0944947 = Game of Thrones — very well seeded, reliable test
+    const results = await Torrentio.single({
+      imdbAid: 'tt0944947',
+      titles: ['Game of Thrones'],
+      episode: 1,
+      resolution: '',
+      exclusions: []
+    })
+    assertResultsIfAny(results)
+    for (const r of results) {
+      assert.match(r.link, /^magnet:/, 'link should be a magnet URI')
+      assert.ok(r.hash.length > 0, 'hash should be non-empty')
+      assert.strictEqual(r.accuracy, 'low')
+    }
+  })
+
+  test('single() resolves imdbAid via Cinemeta when not provided', async () => {
+    const results = await Torrentio.single({
+      titles: ['Game of Thrones'],
+      episode: 1,
+      resolution: '',
+      exclusions: []
+    })
+    assertResultsIfAny(results)
+  })
+
+  test('movie() returns valid TorrentResult[] using direct imdbAid', async () => {
+    // tt0068646 = The Godfather
+    const results = await Torrentio.movie({
+      imdbAid: 'tt0068646',
+      titles: ['The Godfather'],
+      resolution: '',
+      exclusions: []
+    })
+    assertResultsIfAny(results)
+    for (const r of results) {
+      assert.match(r.link, /^magnet:/, 'link should be a magnet URI')
+    }
+  })
+
+  test('movie() resolves imdbAid via Cinemeta when not provided', async () => {
+    const results = await Torrentio.movie({
+      titles: ['The Godfather'],
+      resolution: '',
+      exclusions: []
+    })
+    assertResultsIfAny(results)
+  })
+
+  test('batch() aliases single()', () => {
+    assert.strictEqual(Torrentio.batch, Torrentio.single)
   })
 })

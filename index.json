@@ -154,6 +154,21 @@
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/nekobt.js"
   },
   {
+    "name": "Torrentio",
+    "id": "hayase.extension.torrentio",
+    "version": "1.0.0",
+    "type": "torrent",
+    "accuracy": "low",
+    "ratio": 0,
+    "media": "both",
+    "languages": ["all"],
+    "url": "aHR0cHM6Ly90b3JyZW50aW8uc3RyZW0uZnVu",
+    "description": "Aggregates torrents from multiple sources via Torrentio/Stremio. Resolves IMDb IDs via Cinemeta when not available.",
+    "icon": "https://torrentio.strem.fun/favicon.ico",
+    "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
+    "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/torrentio.js"
+  },
+  {
     "name": "TokyoTosho",
     "id": "hayase.extension.tokyotosho",
     "version": "1.0.2",
