@@ -56,7 +56,7 @@ export default new class Torrentio {
           downloads: 0,
           size,
           date: new Date(),
-          accuracy: 'low'
+          accuracy: 'medium'
         }]
       })
     } catch {

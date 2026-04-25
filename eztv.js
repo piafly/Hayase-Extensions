@@ -48,7 +48,7 @@ export default new class EZTV {
           downloads: 0,
           size:      parseInt(t.size_bytes ?? '0') || 0,
           date:      new Date((t.date_released_unix ?? 0) * 1000),
-          accuracy:  'low'
+          accuracy:  'medium'
         }))
         .filter(t => t.hash)
     } catch {

@@ -156,9 +156,9 @@
   {
     "name": "Torrentio",
     "id": "hayase.extension.torrentio",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "torrent",
-    "accuracy": "low",
+    "accuracy": "medium",
     "ratio": 0,
     "media": "both",
     "languages": ["all"],
@@ -171,9 +171,9 @@
   {
     "name": "EZTV",
     "id": "hayase.extension.eztv",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "torrent",
-    "accuracy": "low",
+    "accuracy": "medium",
     "ratio": 0,
     "media": "both",
     "languages": ["all"],
