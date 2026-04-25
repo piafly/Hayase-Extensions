@@ -14,6 +14,8 @@ import AniRena from './anirena.js'
 import AniRenaGerman from './anirena-german.js'
 import NekoBT from './nekobt.js'
 import Torrentio from './torrentio.js'
+import EZTV from './eztv.js'
+import YTS from './yts.js'
 
 // ─── Source URL overview ──────────────────────────────────────────────────────
 // URLs are base64-encoded in extension files. Decoded for reference:
@@ -564,5 +566,107 @@ describe('Torrentio', () => {
 
   test('batch() aliases single()', () => {
     assert.strictEqual(Torrentio.batch, Torrentio.single)
+  })
+})
+
+// ─── EZTV ─────────────────────────────────────────────────────────────────────
+
+describe('EZTV', () => {
+  test('test() confirms connectivity', async () => {
+    const ok = await EZTV.test()
+    assert.strictEqual(ok, true)
+  })
+
+  test('single() returns [] when imdbAid and titles are both missing', async () => {
+    const results = await EZTV.single({ resolution: '', exclusions: [] })
+    assert.deepStrictEqual(results, [])
+  })
+
+  test('single() returns valid TorrentResult[] using direct imdbAid', async () => {
+    // tt0944947 = Game of Thrones — large EZTV catalogue
+    const results = await EZTV.single({
+      imdbAid: 'tt0944947',
+      titles: ['Game of Thrones'],
+      episode: 1,
+      resolution: '',
+      exclusions: []
+    })
+    assertResultsIfAny(results)
+    for (const r of results) {
+      assert.match(r.link, /^magnet:/, 'link should be a magnet URI')
+      assert.ok(r.hash.length > 0, 'hash should be non-empty')
+      assert.strictEqual(r.accuracy, 'low')
+    }
+  })
+
+  test('single() resolves imdbAid via Cinemeta when not provided', async () => {
+    const results = await EZTV.single({
+      titles: ['Game of Thrones'],
+      episode: 1,
+      resolution: '',
+      exclusions: []
+    })
+    assertResultsIfAny(results)
+  })
+
+  test('batch() aliases single()', () => {
+    assert.strictEqual(EZTV.batch, EZTV.single)
+  })
+
+  test('movie() aliases single()', () => {
+    assert.strictEqual(EZTV.movie, EZTV.single)
+  })
+})
+
+// ─── YTS ──────────────────────────────────────────────────────────────────────
+
+describe('YTS', () => {
+  test('test() confirms connectivity', async () => {
+    try {
+      const ok = await YTS.test()
+      assert.strictEqual(ok, true)
+    } catch (e) {
+      // yts.mx blocks server-side IPs via DNS — works correctly from Electron/browser
+      if (e?.cause?.code === 'ENOTFOUND') {
+        console.log('  ⚠ YTS unreachable from server IP (DNS blocked) — expected in Node.js context')
+        return
+      }
+      throw e
+    }
+  })
+
+  test('movie() returns [] when titles and imdbAid are missing', async () => {
+    const results = await YTS.movie({ resolution: '', exclusions: [] })
+    assert.deepStrictEqual(results, [])
+  })
+
+  test('movie() returns valid TorrentResult[] using direct imdbAid', async () => {
+    // tt0068646 = The Godfather — reliably indexed on YTS
+    const results = await YTS.movie({
+      imdbAid: 'tt0068646',
+      titles: ['The Godfather'],
+      resolution: '',
+      exclusions: []
+    })
+    assertResultsIfAny(results)
+    for (const r of results) {
+      assert.ok(r.hash.length > 0, 'hash should be non-empty')
+      assert.match(r.title, /YTS/, 'title should contain YTS branding')
+      assert.strictEqual(r.accuracy, 'low')
+    }
+  })
+
+  test('movie() returns valid TorrentResult[] using title search', async () => {
+    const results = await YTS.movie({
+      titles: ['The Godfather'],
+      resolution: '',
+      exclusions: []
+    })
+    assertResultsIfAny(results)
+  })
+
+  test('single() and batch() alias movie()', () => {
+    assert.strictEqual(YTS.single, YTS.movie)
+    assert.strictEqual(YTS.batch, YTS.movie)
   })
 })
