@@ -1,5 +1,5 @@
 export default new class Nyaa {
-  base = 'https://nyaa.si/?page=rss&c=1_0&f=0&q='
+  base = atob('aHR0cHM6Ly9ueWFhLnNpLz9wYWdlPXJzcyZjPTFfMCZmPTAmcT0=')
 
   /** @type {import('./').SearchFunction} */
   async single({ titles, episode, fetch = globalThis.fetch }) {
@@ -42,7 +42,7 @@ export default new class Nyaa {
 
       results.push({
         title,
-        link: viewId ? 'https://nyaa.si/download/' + viewId + '.torrent' : '',
+        link: viewId ? atob('aHR0cHM6Ly9ueWFhLnNpL2Rvd25sb2FkLw==') + viewId + '.torrent' : '',
         hash,
         seeders:   parseInt(s.match(/<nyaa:seeders>(\d+)<\/nyaa:seeders>/)?.[1]   ?? '0'),
         leechers:  parseInt(s.match(/<nyaa:leechers>(\d+)<\/nyaa:leechers>/)?.[1]  ?? '0'),

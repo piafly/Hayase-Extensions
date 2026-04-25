@@ -1,5 +1,5 @@
 export default new class TokyoTosho {
-  base = 'https://www.tokyotosho.info/rss.php'
+  base = atob('aHR0cHM6Ly93d3cudG9reW90b3Noby5pbmZvL3Jzcy5waHA=')
 
   /** @type {import('./').SearchFunction} */
   async single({ titles, episode, fetch = globalThis.fetch }) {

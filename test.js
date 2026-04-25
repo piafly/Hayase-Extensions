@@ -12,6 +12,24 @@ import NyaaGerman from './nyaa-german.js'
 import AnimeToshoGerman from './animetosho-german.js'
 import AniRena from './anirena.js'
 import AniRenaGerman from './anirena-german.js'
+import NekoBT from './nekobt.js'
+
+// ─── Source URL overview ──────────────────────────────────────────────────────
+// URLs are base64-encoded in extension files. Decoded for reference:
+const SOURCES = {
+  Seadex:           atob('aHR0cHM6Ly9yZWxlYXNlcy5tb2U='),
+  AnimeTosho:       atob('aHR0cHM6Ly9mZWVkLmFuaW1ldG9zaG8ub3Jn'),
+  Nyaa:             atob('aHR0cHM6Ly9ueWFhLnNpLz9wYWdlPXJzcyZjPTFfMCZmPTAmcT0='),
+  PirateBay:        atob('aHR0cHM6Ly9hcGliYXkub3JnL3EucGhwP3E9'),
+  SubsPlease:       atob('aHR0cHM6Ly9zdWJzcGxlYXNlLm9yZy9hcGkv'),
+  TokyoTosho:       atob('aHR0cHM6Ly93d3cudG9reW90b3Noby5pbmZvL3Jzcy5waHA='),
+  AniRena:          atob('aHR0cHM6Ly93d3cuYW5pcmVuYS5jb20vcnNzP3E9'),
+  NekoBT:           atob('aHR0cHM6Ly9uZWtvYnQudG8vYXBpL3YxLw=='),
+  NekoBTMapping:    atob('aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL1RoYVVua25vd24vYW5pbWUtbGlzdHMtdHMvcmVmcy9oZWFkcy9tYWluL2RhdGEvbmJ0LW1hcHBpbmcuanNvbg=='),
+}
+console.log('\nSource URLs:')
+for (const [name, url] of Object.entries(SOURCES)) console.log(`  ${name.padEnd(16)} ${url}`)
+console.log('')
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -427,5 +445,50 @@ describe('AniRenaGerman', () => {
         `Expected German indicator in title: "${r.title}"`)
     }
     console.log(`  → ${results.length} German result(s)`)
+  })
+})
+
+// ─── NekoBT ───────────────────────────────────────────────────────────────────
+
+describe('NekoBT', () => {
+  test('test() confirms connectivity', async () => {
+    const ok = await NekoBT.test()
+    assert.strictEqual(ok, true)
+  })
+
+  test('single() returns [] when no IDs are provided', async () => {
+    const results = await NekoBT.single({ titles: ['One Piece'], episode: 1, resolution: '', exclusions: [] })
+    assert.deepStrictEqual(results, [])
+  })
+
+  test('single() returns valid TorrentResult[] for One Piece E1 (TVDB 81797)', async () => {
+    // One Piece TVDB ID = 81797, S01E01 tvdbEId = 361887
+    const results = await NekoBT.single({
+      tvdbId: 81797,
+      tvdbEId: 361887,
+      episode: 1,
+      titles: ['One Piece'],
+      resolution: '',
+      exclusions: []
+    })
+    assertResultsIfAny(results)
+    for (const r of results) {
+      assert.match(r.link, /^magnet:/, 'link should be a magnet URI')
+      assert.ok(r.hash.length > 0, 'hash should be non-empty')
+    }
+  })
+
+  test('batch() returns valid TorrentResult[] for One Piece (TVDB 81797)', async () => {
+    const results = await NekoBT.batch({
+      tvdbId: 81797,
+      titles: ['One Piece'],
+      resolution: '',
+      exclusions: []
+    })
+    assertResultsIfAny(results)
+  })
+
+  test('movie() aliases batch()', () => {
+    assert.strictEqual(NekoBT.movie, NekoBT.batch)
   })
 })

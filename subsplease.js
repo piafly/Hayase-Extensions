@@ -1,5 +1,5 @@
 export default new class SubsPlease {
-  base = 'https://subsplease.org/api/'
+  base = atob('aHR0cHM6Ly9zdWJzcGxlYXNlLm9yZy9hcGkv')
 
   /** @type {import('./').SearchFunction} */
   async single({ titles, episode, fetch = globalThis.fetch }) {

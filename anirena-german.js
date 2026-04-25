@@ -2,7 +2,7 @@
 const GERMAN_RE = /\b(german|deutsch|gersub|gerdub)\b|\[ger\]|\(ger\)|\[de\]|\(de\)/i
 
 export default new class AniRenaGerman {
-  base = 'https://www.anirena.com/rss?q='
+  base = atob('aHR0cHM6Ly93d3cuYW5pcmVuYS5jb20vcnNzP3E9')
 
   /** @type {import('./').SearchFunction} */
   async single ({ titles, episode, fetch = globalThis.fetch }) {

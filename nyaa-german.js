@@ -2,7 +2,7 @@
 // German releases consistently use "German", "Deutsch", "GerSub", or "GerDub"
 // in their titles, so keyword-based RSS queries are reliable enough.
 export default new class NyaaGerman {
-  base = 'https://nyaa.si/?page=rss&c=1_0&f=0&q='
+  base = atob('aHR0cHM6Ly9ueWFhLnNpLz9wYWdlPXJzcyZjPTFfMCZmPTAmcT0=')
 
   /** @type {import('./').SearchFunction} */
   async single ({ titles, episode, fetch = globalThis.fetch }) {
@@ -62,7 +62,7 @@ export default new class NyaaGerman {
 
       const viewId = s.match(/<guid[^>]*>https:\/\/nyaa\.si\/view\/(\d+)<\/guid>/)?.[1]
       const hash = (s.match(/<nyaa:infoHash>(.*?)<\/nyaa:infoHash>/)?.[1] ?? '').toLowerCase()
-      const link = viewId ? `https://nyaa.si/download/${viewId}.torrent` : ''
+      const link = viewId ? atob('aHR0cHM6Ly9ueWFhLnNpL2Rvd25sb2FkLw==') + viewId + '.torrent' : ''
       const pubDate = s.match(/<pubDate>(.*?)<\/pubDate>/)?.[1]
 
       items.push({

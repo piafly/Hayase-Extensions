@@ -1,5 +1,5 @@
 export default new class PirateBay {
-  base = 'https://apibay.org/q.php?q='
+  base = atob('aHR0cHM6Ly9hcGliYXkub3JnL3EucGhwP3E9')
 
   /** @type {import('./').SearchFunction} */
   async single({ titles, episode, fetch = globalThis.fetch }) {

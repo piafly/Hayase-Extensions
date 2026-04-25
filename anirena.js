@@ -1,5 +1,5 @@
 export default new class AniRena {
-  base = 'https://www.anirena.com/rss?q='
+  base = atob('aHR0cHM6Ly93d3cuYW5pcmVuYS5jb20vcnNzP3E9')
 
   /** @type {import('./').SearchFunction} */
   async single ({ titles, episode, fetch = globalThis.fetch }) {

@@ -51,7 +51,7 @@
     "languages": ["US"],
     "url": "aHR0cHM6Ly9hcGliYXkub3Jn",
     "description": "Fetches torrents from The Pirate Bay via apibay.org",
-    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/The_Pirate_Bay_logo.svg/1058px-The_Pirate_Bay_logo.svg.png?20070826080948",
+    "icon": "https://thepiratebay.org/favicon.ico",
     "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/piratebay.js"
   },
@@ -138,6 +138,20 @@
     "icon": "https://animetosho.org/inc/favicon.ico",
     "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
     "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/animetosho-german.js"
+  },
+  {
+    "name": "NekoBT",
+    "id": "hayase.extension.nekobt",
+    "version": "1.0.0",
+    "type": "torrent",
+    "accuracy": "high",
+    "ratio": 0,
+    "media": "sub",
+    "languages": ["all"],
+    "url": "aHR0cHM6Ly9uZWtvYnQudG8=",
+    "icon": "https://nekobt.to/favicon.ico",
+    "update": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/index.json",
+    "code": "https://raw.githubusercontent.com/piafly/Hayase-Extensions/main/nekobt.js"
   },
   {
     "name": "TokyoTosho",
